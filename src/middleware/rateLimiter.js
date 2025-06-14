@@ -2,7 +2,7 @@ import ratelimit from "../config/upstash.js";
 
 const ratelimiter=async(req,res,next)=>{
     try{
-      const userId=(req.body && req.body.user_id )|| (req.query && req.query.user_id) || (req.headers &&req.headers["x-user-id"]);
+      const userId=req.params?.userId;
       if(!userId){
         return res.status(400).json({message:"UserId is required!"})
       }
