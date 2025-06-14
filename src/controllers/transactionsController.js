@@ -6,7 +6,7 @@ export async function getTransactionByUserId(req,res){
       const transactions=await sql`
       SELECT * FROM transactions WHERE user_id = ${userId} ORDER BY created_at DESC
       `
-      res.status(200),json(transactions);
+      res.status(200).json(transactions);
       }catch(error){
         console.log("Error getting transaction",error);
         res.status(500).json({message:"Internal server error."});
@@ -37,7 +37,7 @@ export async function deleteTransaction(req,res){
         return res.status(400).json({message:"Invalid transaction Id."})
      }
      const result = await sql `
-     DELETE FROM transcations WHERE id = ${id} RETURNING *
+     DELETE FROM transactions WHERE id = ${id} RETURNING *
      `
      if(result.length === 0){
         return res.status(404).json({message:"Transaction not found"})
@@ -45,21 +45,21 @@ export async function deleteTransaction(req,res){
      return res.status(200).json({message:"Transaction deleted successfully!"})
     }catch(error){
         console.log("Error deleting transaction",error);
-    res.status(500).json({message:"Internal server error."})
+        res.status(500).json({message:"Internal server error."})
  }
 }
 
 export async function getSummaryById(req,res){
      try{
-    const {userID}=rea.params;
+    const {userId}=req.params;
     const balanceRes=await sql`
-    SELECT COALESCE(SUM(amount),0) as balance FROM transactions WHERE user_id = ${userID}
+    SELECT COALESCE(SUM(amount),0) as balance FROM transactions WHERE user_id = ${userId}
     `
     const incomeRes=await sql`
-    SELECT COALESCE(SUM(amount),0) as income FROM transactions WHERE user_id = ${userID}
+    SELECT COALESCE(SUM(amount),0) as income FROM transactions WHERE user_id = ${userId} AND amount >0
     `
     const expensesRes=await sql`
-     SELECT COALESCE(SUM(amount),0) as expenses FROM transactions WHERE user_id = ${userID}
+     SELECT COALESCE(SUM(amount),0) as expenses FROM transactions WHERE user_id = ${userId} AND amount <0
     `
     res.status(200).json({
         balance:balanceRes[0].balance,
