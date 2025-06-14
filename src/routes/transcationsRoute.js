@@ -1,5 +1,5 @@
 import express from "express";
-import ratelimiter from "./middleware/rateLimiter.js";
+import ratelimiter from "../middleware/rateLimiter.js"
 
 import {getTransactionByUserId,  createTransaction, deleteTransaction, getSummaryById } from "../controllers/transactionsController.js"
 
