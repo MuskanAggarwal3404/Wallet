@@ -10,8 +10,8 @@ const app=express();
 const PORT=5001;
 
 app.use(cors());
-app.use(ratelimiter);
 app.use(express.json());
+app.use(ratelimiter);
 
 app.use("/api/transactions",transactionsRoute);
 
