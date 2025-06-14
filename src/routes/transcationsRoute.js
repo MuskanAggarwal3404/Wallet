@@ -1,13 +1,13 @@
 import express from "express";
-import rateLimiter from "../middleware/rateLimiter.js"
+import ratelimiter from "./middleware/rateLimiter.js";
 
 import {getTransactionByUserId,  createTransaction, deleteTransaction, getSummaryById } from "../controllers/transactionsController.js"
 
 const router=express.Router();
 
-router.get("/:userId",rateLimiter,getTransactionByUserId)
+router.get("/:userId",ratelimiter,getTransactionByUserId)
 
-router.get("/summary/:userId",rateLimiter,getSummaryById)
+router.get("/summary/:userId",ratelimiter,getSummaryById)
 
 router.post("/",createTransaction)
 

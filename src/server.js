@@ -1,7 +1,6 @@
 import express from  "express";
 import dotenv from "dotenv";
 import {initDB} from "./config/db.js";
-import ratelimiter from "./middleware/rateLimiter.js";
 import transactionsRoute from "./routes/transcationsRoute.js";
 import cors from "cors";
 
