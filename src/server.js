@@ -11,9 +11,8 @@ const PORT=5001;
 
 app.use(cors());
 app.use(express.json());
-app.use(ratelimiter);
 
-app.use("/api/transactions",transactionsRoute);
+app.use("/api/transactions",ratelimiter,transactionsRoute);
 
 initDB().then(()=>{
     app.listen(PORT,()=>{
